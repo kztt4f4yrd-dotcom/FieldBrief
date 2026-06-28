@@ -1,4 +1,6 @@
 import Link from "next/link";
+import DetailSection from "@/components/sections/DetailSection";
+import DetailRow from "@/components/sections/DetailRow";
 import { getLegalUpdateById } from "@/lib/database";
 
 type PageProps = {
@@ -47,43 +49,22 @@ export default async function UpdateDetailPage({ params }: PageProps) {
           {update.category ?? "General"} • {update.jurisdiction}
         </p>
 
-        <section className="mt-6 rounded-2xl border border-zinc-800 bg-zinc-900 p-4">
-          <p className="text-sm text-zinc-400">What Changed</p>
-          <p className="mt-2 text-zinc-100">{update.summary}</p>
-        </section>
+        <DetailSection label="What Changed">
+          <p>{update.summary}</p>
+        </DetailSection>
 
-        <section className="mt-4 rounded-2xl border border-zinc-800 bg-zinc-900 p-4">
-          <p className="text-sm text-zinc-400">Officer Takeaway</p>
-          <p className="mt-2 text-zinc-100">
-            {update.officer_takeaway ?? "No officer takeaway provided."}
-          </p>
-        </section>
+        <DetailSection label="Officer Takeaway">
+          <p>{update.officer_takeaway ?? "No officer takeaway provided."}</p>
+        </DetailSection>
 
-        <section className="mt-4 rounded-2xl border border-zinc-800 bg-zinc-900 p-4">
-          <p className="text-sm text-zinc-400">Details</p>
-
-          <div className="mt-3 space-y-2 text-sm text-zinc-300">
-            <p>
-              <span className="text-zinc-500">Priority:</span>{" "}
-              {update.priority}
-            </p>
-
-            <p>
-              <span className="text-zinc-500">Circuit:</span>{" "}
-              {update.circuit ?? "N/A"}
-            </p>
-
-            <p>
-              <span className="text-zinc-500">Effective Date:</span>{" "}
-              {update.effective_date ?? "Not listed"}
-            </p>
-
-            <p>
-              <span className="text-zinc-500">Source Type:</span>{" "}
-              {update.source_type ?? "Not listed"}
-            </p>
+        <DetailSection label="Details">
+          <div className="space-y-2 text-sm text-zinc-300">
+            <DetailRow label="Priority" value={update.priority} />
+            <DetailRow label="Circuit" value={update.circuit} />
+            <DetailRow label="Effective Date" value={update.effective_date} />
+            <DetailRow label="Source Type" value={update.source_type} />
           </div>
-        </section>
+        </DetailSection>
 
         {update.source_url && (
           <a
