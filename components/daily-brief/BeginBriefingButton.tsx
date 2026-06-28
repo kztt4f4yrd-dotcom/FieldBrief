@@ -7,7 +7,7 @@ export default function BeginBriefingButton({
 }) {
   return (
     <Link
-      href={totalUpdates > 0 ? "/briefing" : "/search"}
+      href={totalUpdates > 0 ? "/briefing/1" : "/search"}
       className="mt-5 block rounded-2xl bg-zinc-100 px-4 py-4 text-center font-black text-zinc-950"
     >
       {totalUpdates > 0 ? "Begin Briefing →" : "Explore Briefs →"}
