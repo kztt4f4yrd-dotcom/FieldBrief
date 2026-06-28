@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Navigation from "@/components/layout/Navigation";
-import { getLegalUpdates } from "@/lib/database";
+import { getLegalUpdates, searchLegalUpdates } from "@/lib/database";
 
 type SearchPageProps = {
   searchParams?: Promise<{
@@ -10,29 +10,10 @@ type SearchPageProps = {
 
 export default async function SearchPage({ searchParams }: SearchPageProps) {
   const params = searchParams ? await searchParams : {};
-  const query = params.q?.trim().toLowerCase() ?? "";
+  const query = params.q?.trim() ?? "";
 
   const legalUpdates = await getLegalUpdates();
-
-  const results =
-    query.length === 0
-      ? legalUpdates
-      : legalUpdates.filter((update) => {
-          const searchableText = [
-            update.title,
-            update.summary,
-            update.category,
-            update.jurisdiction,
-            update.circuit,
-            update.officer_takeaway,
-            update.source_type,
-          ]
-            .filter(Boolean)
-            .join(" ")
-            .toLowerCase();
-
-          return searchableText.includes(query);
-        });
+  const results = searchLegalUpdates(legalUpdates, query);
 
   return (
     <main className="min-h-screen bg-zinc-950 px-5 py-6 text-zinc-100">
