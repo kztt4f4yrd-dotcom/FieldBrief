@@ -5,6 +5,7 @@ import JurisdictionCard from "@/components/cards/JurisdictionCard";
 import ShiftSummaryCard from "@/components/cards/ShiftSummaryCard";
 import BriefSection from "@/components/sections/BriefSection";
 import SearchBar from "@/components/search/SearchBar";
+import { PRIORITIES } from "@/lib/constants";
 import { getLegalUpdates } from "@/lib/database";
 
 export default async function Home() {
@@ -41,23 +42,23 @@ export default async function Home() {
 
         <section className="mt-6 space-y-4">
           <BriefSection
-            icon="🔴"
-            title="Action Required"
-            description="Changes that affect what you must do before patrol."
+            icon={PRIORITIES.action_required.icon}
+            title={PRIORITIES.action_required.label}
+            description={PRIORITIES.action_required.description}
             updates={actionRequired}
           />
 
           <BriefSection
-            icon="🟡"
-            title="Know Before Shift"
-            description="Important updates worth reviewing before work."
+            icon={PRIORITIES.know_before_shift.icon}
+            title={PRIORITIES.know_before_shift.label}
+            description={PRIORITIES.know_before_shift.description}
             updates={knowBeforeShift}
           />
 
           <BriefSection
-            icon="📚"
-            title="Reference"
-            description="Useful legal information with no immediate action."
+            icon={PRIORITIES.reference.icon}
+            title={PRIORITIES.reference.label}
+            description={PRIORITIES.reference.description}
             updates={reference}
           />
         </section>
