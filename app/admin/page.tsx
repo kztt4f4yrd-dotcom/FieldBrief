@@ -3,21 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
-
-const categories = [
-  "Traffic Stops",
-  "Search & Seizure",
-  "DUI",
-  "Arrest & Detention",
-  "Warrants",
-  "Use of Force",
-  "Digital Evidence",
-  "Juvenile Law",
-  "Controlled Substances",
-  "Reports & Procedure",
-  "Officer Safety",
-  "General",
-];
+import { CATEGORIES, DEFAULT_CIRCUIT, DEFAULT_JURISDICTION } from "@/lib/constants";
 
 export default function AdminPage() {
   const [title, setTitle] = useState("");
@@ -42,8 +28,8 @@ export default function AdminPage() {
       source_url: sourceUrl || null,
       source_type: sourceType || null,
       effective_date: effectiveDate || null,
-      jurisdiction: "North Dakota",
-      circuit: "8th Circuit",
+      jurisdiction: DEFAULT_JURISDICTION,
+      circuit: DEFAULT_CIRCUIT,
     });
 
     if (error) {
@@ -103,7 +89,7 @@ export default function AdminPage() {
               value={category}
               onChange={(e) => setCategory(e.target.value)}
             >
-              {categories.map((item) => (
+              {CATEGORIES.map((item) => (
                 <option key={item} value={item}>
                   {item}
                 </option>
