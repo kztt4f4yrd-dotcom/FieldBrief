@@ -1,6 +1,8 @@
-import Link from "next/link";
+import Header from "@/components/Header";
 import Navigation from "@/components/Navigation";
 import StatusCard from "@/components/StatusCard";
+import JurisdictionCard from "@/components/JurisdictionCard";
+import ShiftSummaryCard from "@/components/ShiftSummaryCard";
 import BriefSection from "@/components/BriefSection";
 import SearchBar from "@/components/SearchBar";
 import { supabase } from "@/lib/supabase";
@@ -30,57 +32,22 @@ export default async function Home() {
     (update) => update.priority === "reference"
   );
 
-  const hasActionRequired = actionRequired.length > 0;
-
   return (
     <main className="min-h-screen bg-zinc-950 px-5 py-6 text-zinc-100">
       <section className="mx-auto max-w-md pb-28">
-        <header className="flex items-center justify-between">
-          <p className="text-sm font-semibold tracking-[0.25em] text-zinc-500">
-            FIELDBRIEF
-          </p>
-
-          <Link
-            href="/sources"
-            className="rounded-full border border-zinc-800 px-3 py-1 text-xs font-semibold text-zinc-400"
-          >
-            Sources
-          </Link>
-        </header>
+        <Header />
 
         <StatusCard
-          hasActionRequired={hasActionRequired}
+          hasActionRequired={actionRequired.length > 0}
           actionRequiredCount={actionRequired.length}
         />
 
-        <section className="mt-5 rounded-2xl border border-zinc-800 bg-zinc-900 p-4">
-          <p className="text-sm text-zinc-400">Your Jurisdiction</p>
-          <h2 className="mt-1 text-lg font-semibold">
-            North Dakota • 8th Circuit
-          </h2>
-        </section>
+        <JurisdictionCard />
 
-        <section className="mt-5 rounded-2xl border border-zinc-800 bg-zinc-900 p-4">
-          <p className="text-sm text-zinc-400">Since Your Last Shift</p>
-
-          <div className="mt-4 grid grid-cols-2 gap-3">
-            <div className="rounded-xl bg-zinc-950 p-3">
-              <p className="text-2xl font-bold">{actionRequired.length}</p>
-              <p className="text-xs text-zinc-500">Critical changes</p>
-            </div>
-
-            <div className="rounded-xl bg-zinc-950 p-3">
-              <p className="text-2xl font-bold">{legalUpdates.length}</p>
-              <p className="text-xs text-zinc-500">New updates</p>
-            </div>
-          </div>
-
-          <p className="mt-4 text-sm text-zinc-400">
-            {legalUpdates.length > 0
-              ? "Review the updates below before your next shift."
-              : "Nothing new since your last recorded shift."}
-          </p>
-        </section>
+        <ShiftSummaryCard
+          actionRequiredCount={actionRequired.length}
+          totalUpdates={legalUpdates.length}
+        />
 
         <section className="mt-6 space-y-4">
           <BriefSection
