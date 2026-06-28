@@ -8,16 +8,19 @@ export type LegalUpdate = {
   category: string | null;
   officer_takeaway: string | null;
   source_url: string | null;
+  source_type: string | null;
+  effective_date: string | null;
   created_at: string;
 };
 
 export type TrustedSource = {
   id: string;
   name: string;
-  source_type: string;
   jurisdiction: string;
+  source_type: string;
   official_url: string;
   status: string;
-  last_checked: string | null;
   notes: string | null;
+  last_checked: string | null;
+  created_at: string;
 };

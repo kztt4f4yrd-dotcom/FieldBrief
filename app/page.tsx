@@ -5,20 +5,10 @@ import JurisdictionCard from "@/components/cards/JurisdictionCard";
 import ShiftSummaryCard from "@/components/cards/ShiftSummaryCard";
 import BriefSection from "@/components/sections/BriefSection";
 import SearchBar from "@/components/search/SearchBar";
-import { supabase } from "@/lib/supabase";
-import type { LegalUpdate } from "@/lib/types";
+import { getLegalUpdates } from "@/lib/database";
 
 export default async function Home() {
-  const { data: updates, error } = await supabase
-    .from("legal_updates")
-    .select("*")
-    .order("created_at", { ascending: false });
-
-  if (error) {
-    console.error(error);
-  }
-
-  const legalUpdates = (updates ?? []) as LegalUpdate[];
+  const legalUpdates = await getLegalUpdates();
 
   const actionRequired = legalUpdates.filter(
     (update) => update.priority === "action_required"

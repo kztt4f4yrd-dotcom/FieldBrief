@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { supabase } from "@/lib/supabase";
+import { getLegalUpdateById } from "@/lib/database";
 
 type PageProps = {
   params: Promise<{
@@ -9,14 +9,9 @@ type PageProps = {
 
 export default async function UpdateDetailPage({ params }: PageProps) {
   const { id } = await params;
+  const update = await getLegalUpdateById(id);
 
-  const { data: update, error } = await supabase
-    .from("legal_updates")
-    .select("*")
-    .eq("id", id)
-    .single();
-
-  if (error || !update) {
+  if (!update) {
     return (
       <main className="min-h-screen bg-zinc-950 px-5 py-6 text-zinc-100">
         <section className="mx-auto max-w-md">

@@ -1,29 +1,8 @@
 import Link from "next/link";
-import { supabase } from "@/lib/supabase";
-
-type TrustedSource = {
-  id: string;
-  name: string;
-  source_type: string;
-  jurisdiction: string;
-  official_url: string;
-  status: string;
-  last_checked: string | null;
-  notes: string | null;
-};
+import { getTrustedSources } from "@/lib/database";
 
 export default async function SourcesPage() {
-  const { data, error } = await supabase
-    .from("trusted_sources")
-    .select("*")
-    .order("jurisdiction", { ascending: true })
-    .order("name", { ascending: true });
-
-  if (error) {
-    console.error(error);
-  }
-
-  const sources = (data ?? []) as TrustedSource[];
+  const sources = await getTrustedSources();
 
   return (
     <main className="min-h-screen bg-zinc-950 px-5 py-6 text-zinc-100">
@@ -41,7 +20,8 @@ export default async function SourcesPage() {
         </h1>
 
         <p className="mt-3 text-sm text-zinc-400">
-          Official sources FieldBrief monitors or will monitor for legal and operational changes.
+          Official sources FieldBrief monitors or will monitor for legal and
+          operational changes.
         </p>
 
         <section className="mt-6 space-y-3">
