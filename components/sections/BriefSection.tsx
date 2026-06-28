@@ -1,4 +1,4 @@
-import UpdateCard from "@/components/UpdateCard";
+import UpdateCard from "@/components/cards/UpdateCard";
 import type { LegalUpdate } from "@/lib/types";
 
 export default function BriefSection({

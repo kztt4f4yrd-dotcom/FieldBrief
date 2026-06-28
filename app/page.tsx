@@ -1,10 +1,10 @@
-import Header from "@/components/Header";
-import Navigation from "@/components/Navigation";
-import StatusCard from "@/components/StatusCard";
-import JurisdictionCard from "@/components/JurisdictionCard";
-import ShiftSummaryCard from "@/components/ShiftSummaryCard";
-import BriefSection from "@/components/BriefSection";
-import SearchBar from "@/components/SearchBar";
+import Header from "@/components/layout/Header";
+import Navigation from "@/components/layout/Navigation";
+import StatusCard from "@/components/cards/StatusCard";
+import JurisdictionCard from "@/components/cards/JurisdictionCard";
+import ShiftSummaryCard from "@/components/cards/ShiftSummaryCard";
+import BriefSection from "@/components/sections/BriefSection";
+import SearchBar from "@/components/search/SearchBar";
 import { supabase } from "@/lib/supabase";
 import type { LegalUpdate } from "@/lib/types";
 
