@@ -5,8 +5,7 @@ import ShiftSummaryCard from "@/components/cards/ShiftSummaryCard";
 import BriefSection from "@/components/sections/BriefSection";
 import SearchBar from "@/components/search/SearchBar";
 import DailyBriefHeader from "@/components/daily-brief/DailyBriefHeader";
-import ReadingTimeCard from "@/components/daily-brief/ReadingTimeCard";
-import BeginBriefingButton from "@/components/daily-brief/BeginBriefingButton";
+import DailyBriefActionCard from "@/components/daily-brief/DailyBriefActionCard";
 import { PRIORITIES } from "@/lib/constants";
 import { getLegalUpdates, buildOperationalBrief } from "@/lib/database";
 import { estimateReadingMinutes } from "@/lib/utils/readingTime";
@@ -28,17 +27,15 @@ export default async function Home() {
 
         <JurisdictionCard />
 
+        <DailyBriefActionCard
+          totalUpdates={brief.totalUpdates}
+          readingMinutes={readingMinutes}
+        />
+
         <ShiftSummaryCard
           actionRequiredCount={brief.actionRequired.length}
           totalUpdates={brief.totalUpdates}
         />
-
-        <ReadingTimeCard
-          readingMinutes={readingMinutes}
-          totalUpdates={brief.totalUpdates}
-        />
-
-        <BeginBriefingButton totalUpdates={brief.totalUpdates} />
 
         <section className="mt-6 space-y-4">
           <BriefSection
