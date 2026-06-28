@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { supabase } from "@/lib/supabase";
-import { CATEGORIES, DEFAULT_CIRCUIT, DEFAULT_JURISDICTION } from "@/lib/constants";
+import { CATEGORIES } from "@/lib/constants";
+import { createLegalUpdate } from "@/lib/database";
 
 export default function AdminPage() {
   const [title, setTitle] = useState("");
@@ -19,21 +19,19 @@ export default function AdminPage() {
   async function publishUpdate() {
     setMessage("Publishing...");
 
-    const { error } = await supabase.from("legal_updates").insert({
+    const result = await createLegalUpdate({
       title,
       summary,
-      officer_takeaway: officerTakeaway,
+      officerTakeaway,
       priority,
       category,
-      source_url: sourceUrl || null,
-      source_type: sourceType || null,
-      effective_date: effectiveDate || null,
-      jurisdiction: DEFAULT_JURISDICTION,
-      circuit: DEFAULT_CIRCUIT,
+      sourceUrl,
+      sourceType,
+      effectiveDate,
     });
 
-    if (error) {
-      setMessage(`Error: ${error.message}`);
+    if (!result.success) {
+      setMessage(`Error: ${result.message}`);
       return;
     }
 
@@ -43,7 +41,7 @@ export default function AdminPage() {
     setSourceUrl("");
     setSourceType("");
     setEffectiveDate("");
-    setMessage("Operational brief issued.");
+    setMessage(result.message);
   }
 
   return (
