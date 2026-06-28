@@ -1,18 +1,12 @@
 import Link from "next/link";
 import Navigation from "@/components/layout/Navigation";
-import { getLegalUpdates, buildOperationalBrief } from "@/lib/database";
+import { getLegalUpdates, buildBriefing } from "@/lib/database";
 
 export default async function BriefingPage() {
   const legalUpdates = await getLegalUpdates();
-  const brief = buildOperationalBrief(legalUpdates);
+  const briefing = buildBriefing(legalUpdates);
 
-  const briefingItems = [
-    ...brief.actionRequired,
-    ...brief.knowBeforeShift,
-    ...brief.reference,
-  ];
-
-  if (briefingItems.length === 0) {
+  if (!briefing.hasBriefs) {
     return (
       <main className="min-h-screen bg-zinc-950 px-5 py-6 text-zinc-100">
         <section className="mx-auto max-w-md pb-28">
@@ -71,13 +65,13 @@ export default async function BriefingPage() {
         </p>
 
         <section className="mt-6 space-y-4">
-          {briefingItems.map((item, index) => (
+          {briefing.items.map((item) => (
             <article
               key={item.id}
               className="rounded-3xl border border-zinc-800 bg-zinc-900 p-5"
             >
               <p className="text-sm font-semibold text-zinc-500">
-                {index + 1} / {briefingItems.length}
+                {item.briefingIndex} / {item.totalBriefs}
               </p>
 
               <p className="mt-3 text-sm text-zinc-400">
