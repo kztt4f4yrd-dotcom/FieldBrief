@@ -9,10 +9,12 @@ import ReadingTimeCard from "@/components/daily-brief/ReadingTimeCard";
 import BeginBriefingButton from "@/components/daily-brief/BeginBriefingButton";
 import { PRIORITIES } from "@/lib/constants";
 import { getLegalUpdates, buildOperationalBrief } from "@/lib/database";
+import { estimateReadingMinutes } from "@/lib/utils/readingTime";
 
 export default async function Home() {
   const legalUpdates = await getLegalUpdates();
   const brief = buildOperationalBrief(legalUpdates);
+  const readingMinutes = estimateReadingMinutes(legalUpdates);
 
   return (
     <main className="min-h-screen bg-zinc-950 px-5 py-6 text-zinc-100">
@@ -31,7 +33,10 @@ export default async function Home() {
           totalUpdates={brief.totalUpdates}
         />
 
-        <ReadingTimeCard totalUpdates={brief.totalUpdates} />
+        <ReadingTimeCard
+          readingMinutes={readingMinutes}
+          totalUpdates={brief.totalUpdates}
+        />
 
         <BeginBriefingButton totalUpdates={brief.totalUpdates} />
 

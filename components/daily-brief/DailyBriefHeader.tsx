@@ -1,5 +1,9 @@
 export default function DailyBriefHeader() {
   const today = new Date();
+  const hour = today.getHours();
+
+  const greeting =
+    hour < 12 ? "Good Morning, Eli" : hour < 18 ? "Good Afternoon, Eli" : "Good Evening, Eli";
 
   const formattedDate = today.toLocaleDateString("en-US", {
     weekday: "long",
@@ -13,7 +17,9 @@ export default function DailyBriefHeader() {
         FIELDBRIEF
       </p>
 
-      <h1 className="mt-5 text-4xl font-black tracking-tight">
+      <p className="mt-5 text-sm font-semibold text-zinc-400">{greeting}</p>
+
+      <h1 className="mt-1 text-4xl font-black tracking-tight">
         Daily Brief
       </h1>
 
